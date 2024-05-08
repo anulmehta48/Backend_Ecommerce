@@ -4,7 +4,11 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const userModel = require("./models/user.model");
 const bcrypt = require("bcrypt");
+const router = require("./routes/auth.routes");
 const URI = process.env.DB_USER;
+
+app.use(express.json())
+
 mongoose
   .connect(URI)
   .then(() => {
@@ -39,9 +43,8 @@ async function init() {
   }
 }
 
-app.use("/", (req, res) => {
-  res.send("Hello Express");
-});
+
+app.use('/',router)
 
 app.listen(3000, () => {
   console.log("Server is running on port " + 3000);
